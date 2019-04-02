@@ -12,6 +12,8 @@ public:
 	void			AddLeft(std::string line);
 	void			AddRight(std::string line);
 	void			PrintRule(void);
+	std::string		getLeftPart(void);
+	std::string		getRightPart(void);
 
 private:
 	Rule &operator=(Rule const & src) ;

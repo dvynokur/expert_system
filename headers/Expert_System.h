@@ -13,13 +13,17 @@ public:
 	Expert_System();
 	~Expert_System();
 
-	void	AddQueries(std::string line);
-	void	AddRule(std::string line);
-	void	AddInitFacts(std::string line);
-	bool	IsQueries(void);
-	bool	IsInitFacts(void);
-	void	PrintRules(void);
-	std::vector<Rule *>		Rules;
+	void				AddQueries(std::string line);
+	void				AddRule(std::string line);
+	void				AddInitFacts(std::string line);
+	void				AddAllFacts(void);
+	bool				IsQueries(void);
+	bool				IsInitFacts(void);
+	void				PrintRules(void);
+	void				PrintFacts(void);
+	bool				FindFacts(char name);
+	std::vector<Rule *>	Rules;
+	std::vector<Fact *>	Facts;
 
 private:
 	Expert_System &operator=(Expert_System const & src) = delete;

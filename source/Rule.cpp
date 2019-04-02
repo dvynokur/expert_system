@@ -17,7 +17,13 @@ void		Rule::PrintRule(void)
 	std::cout << "right: " << this->_right_part << std::endl;
 }
 
+std::string		Rule::getLeftPart(void) {
+	return (this->_left_part);
+}
 
+std::string		Rule::getRightPart(void) {
+	return (this->_right_part);
+}
 
 // Bureaucrat			&Bureaucrat::operator=(Bureaucrat const &src)
 // {

@@ -44,6 +44,52 @@ void	Expert_System::AddInitFacts(std::string line)
 
 }
 
+bool	Expert_System::FindFacts(char name)
+{
+	if (this->Facts.empty())
+		return (0);
+	auto i = this->Facts.begin();
+	while (i != this->Facts.end())
+	{
+		if ((*i)->getName() == name)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	Expert_System::AddAllFacts(void)
+{
+	if (this->Rules.empty())
+		throw ExceptionExpSys("Input is not valid: There are no rules");
+
+	auto i = this->Rules.begin();
+
+	while (i != this->Rules.end())
+	{
+		// std::string str = ???;
+		for(char& c : (*i)->getLeftPart()) {
+			// std::cout << c << std::endl;
+			if (c >= 65 && c <= 90 && !this->FindFacts(c))
+			{
+				auto *OneFact = new(Fact);
+				OneFact->setName(c);
+				this->Facts.push_back(OneFact);
+			}
+		}
+		for(char& c : (*i)->getRightPart()) {
+			if (c >= 65 && c <= 90 && !this->FindFacts(c))
+			{
+				auto *OneFact = new(Fact);
+				OneFact->setName(c);
+				this->Facts.push_back(OneFact);
+			}
+
+		}
+		i++;
+	}
+}
+
 void	Expert_System::AddRule(std::string line)
 {
 	std::string		left = "";
@@ -77,3 +123,15 @@ void	Expert_System::PrintRules(void)
 	}
 }
 
+void	Expert_System::PrintFacts(void)
+{
+	auto i = this->Facts.begin();
+
+	while (i != this->Facts.end())
+	{
+		std::cout << (*i)->getName();
+		std::cout << ", the status is " << (*i)->getStatus();
+		std::cout << std::endl;
+		i++;
+	}
+}

@@ -10,6 +10,9 @@ public:
 	~Fact();
 
 	void	ChangeStatus(bool status);
+	void	setName(char name);
+	char	getName(void);
+	bool	getStatus(void);
 
 private:
 	Fact &operator=(Fact const & src) = delete;

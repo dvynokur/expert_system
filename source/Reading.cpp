@@ -6,7 +6,7 @@ Reading::~Reading() {};
 Reading::Reading(int argc, char **argv)
 {
 	auto		*ExpSys = new(Expert_System);
-	Rule		*TempRule;
+	
 
 	if (argc == 2)
 	{
@@ -18,7 +18,8 @@ Reading::Reading(int argc, char **argv)
 				Checker::CheckLine(this->line, *ExpSys);
 				
 			}
-			ExpSys->PrintRules();
+			ExpSys->AddAllFacts();
+			ExpSys->PrintFacts();
 		}
 		else
 			throw ExceptionExpSys("There must be a file");
