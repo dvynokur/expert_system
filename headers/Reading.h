@@ -6,6 +6,7 @@
 # include "ExceptionExpSys.h"
 # include "Checker.h"
 # include "Expert_System.h"
+# include "Rule.h"
 
 class Reading
 {

@@ -4,6 +4,7 @@
 # include <exception>
 # include <string>
 # include <sstream>
+# include <regex>
 
 class ExceptionExpSys
 {

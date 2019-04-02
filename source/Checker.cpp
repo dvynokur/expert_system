@@ -10,8 +10,11 @@ bool		Checker::CheckLine(std::string line, Expert_System & ExpSys)
 	std::string line_without_comment = line.substr(0, line.find("#"));
 
 	if (line_without_comment[0] == '?')
-		ExpSys.AddQueries(line_without_comment);
-
+		ExpSys.AddQueries(line_without_comment.substr(1));
+	else if (line_without_comment[0] == '=')
+		ExpSys.AddInitFacts(line_without_comment.substr(1));
+	else
+		ExpSys.AddRule(line_without_comment);
 
 	return (1);
 }
