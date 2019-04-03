@@ -19,6 +19,9 @@ Reading::Reading(int argc, char **argv)
 				
 			}
 			ExpSys->AddAllFacts();
+			// ExpSys->PrintFacts();
+			ExpSys->UpdateInitStatus();
+			// std::cout << std::endl;
 			ExpSys->PrintFacts();
 		}
 		else

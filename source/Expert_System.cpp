@@ -19,7 +19,7 @@ bool		Expert_System::IsInitFacts(void)
 		return 1;
 }
 
-void	Expert_System::AddQueries(std::string line)
+void		Expert_System::AddQueries(std::string line)
 {
 	if (this->IsQueries())
 		throw ExceptionExpSys("Input is not valid: More than 1 line with queries");
@@ -31,7 +31,7 @@ void	Expert_System::AddQueries(std::string line)
 	std::cout << "queries: " << this->_queries << std::endl;
 }
 
-void	Expert_System::AddInitFacts(std::string line)
+void		Expert_System::AddInitFacts(std::string line)
 {
 	if (this->IsInitFacts())
 		throw ExceptionExpSys("Input is not valid: More than 1 line with initial facts");
@@ -44,7 +44,7 @@ void	Expert_System::AddInitFacts(std::string line)
 
 }
 
-bool	Expert_System::FindFacts(char name)
+bool		Expert_System::FindFacts(char name)
 {
 	if (this->Facts.empty())
 		return (0);
@@ -58,7 +58,7 @@ bool	Expert_System::FindFacts(char name)
 	return (0);
 }
 
-void	Expert_System::AddAllFacts(void)
+void		Expert_System::AddAllFacts(void)
 {
 	if (this->Rules.empty())
 		throw ExceptionExpSys("Input is not valid: There are no rules");
@@ -67,9 +67,7 @@ void	Expert_System::AddAllFacts(void)
 
 	while (i != this->Rules.end())
 	{
-		// std::string str = ???;
 		for(char& c : (*i)->getLeftPart()) {
-			// std::cout << c << std::endl;
 			if (c >= 65 && c <= 90 && !this->FindFacts(c))
 			{
 				auto *OneFact = new(Fact);
@@ -90,7 +88,25 @@ void	Expert_System::AddAllFacts(void)
 	}
 }
 
-void	Expert_System::AddRule(std::string line)
+// std::string	Expert_System::getInitFacts(void) {
+// 	return (this->_init_facts);
+// }
+
+void		Expert_System::UpdateInitStatus(void)
+{
+	if (this->Facts.empty())
+		throw ExceptionExpSys("Input is not valid: There are no Facts");
+
+	auto i = this->Facts.begin();
+	while (i != this->Facts.end())
+	{
+		if (this->_init_facts.find((*i)->getName()) != std::string::npos)
+		    (*i)->ChangeStatus(true);
+		i++;
+	}
+}
+
+void		Expert_System::AddRule(std::string line)
 {
 	std::string		left = "";
 	std::string		right = "";
@@ -112,7 +128,7 @@ void	Expert_System::AddRule(std::string line)
 	}
 }
 
-void	Expert_System::PrintRules(void)
+void		Expert_System::PrintRules(void)
 {
 	auto i = this->Rules.begin();
 
@@ -123,7 +139,7 @@ void	Expert_System::PrintRules(void)
 	}
 }
 
-void	Expert_System::PrintFacts(void)
+void		Expert_System::PrintFacts(void)
 {
 	auto i = this->Facts.begin();
 

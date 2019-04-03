@@ -22,6 +22,9 @@ public:
 	void				PrintRules(void);
 	void				PrintFacts(void);
 	bool				FindFacts(char name);
+	void				UpdateInitStatus(void);
+	// std::string			getInitFacts(void);
+
 	std::vector<Rule *>	Rules;
 	std::vector<Fact *>	Facts;
 
