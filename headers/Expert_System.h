@@ -23,10 +23,13 @@ public:
 	void				PrintFacts(void);
 	bool				FindFacts(char name);
 	void				UpdateInitStatus(void);
+	bool				CheckPriority(char a, char b);
+	std::string			ConvertString(std::string expr);
 	// std::string			getInitFacts(void);
 
 	std::vector<Rule *>	Rules;
 	std::vector<Fact *>	Facts;
+	
 
 private:
 	Expert_System &operator=(Expert_System const & src) = delete;

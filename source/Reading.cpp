@@ -23,6 +23,7 @@ Reading::Reading(int argc, char **argv)
 			ExpSys->UpdateInitStatus();
 			// std::cout << std::endl;
 			ExpSys->PrintFacts();
+			ExpSys->PrintRules();
 		}
 		else
 			throw ExceptionExpSys("There must be a file");

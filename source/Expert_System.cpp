@@ -88,9 +88,78 @@ void		Expert_System::AddAllFacts(void)
 	}
 }
 
-// std::string	Expert_System::getInitFacts(void) {
-// 	return (this->_init_facts);
-// }
+bool		Expert_System::CheckPriority(char a, char b)
+{
+	if ((a == '+' && b == '!'))
+		return (true);
+	if ((a == '|' && b == '!') || (a == '|' && b == '+'))
+		return (true);
+	if ((a == '^' && b == '!') || (a == '^' && b == '+') || (a == '^' && b == '|'))
+		return (true);
+	return (false);
+}
+
+std::string	Expert_System::ConvertString(std::string expr)
+{
+	std::vector<char>	output;
+	std::vector<char>	operations;
+
+	for(char & c : expr)
+	{
+		if (c >= 65 && c <= 90) {
+			output.push_back(c);
+		}
+		else
+		{
+			if (operations.empty())
+				operations.push_back(c);
+			else
+			{
+				if (c == '(')
+					operations.push_back(c);
+				else if (c == ')')
+				{
+					if (!(std::find(operations.begin(), operations.end(), '(') != operations.end()))
+						throw ExceptionExpSys("Error: Opening parenthesis missing");
+					else
+					{
+						while (operations.back() != '(')
+						{
+							output.push_back(operations.back());
+							operations.pop_back();
+						}
+						operations.pop_back();
+					}
+				}
+				else if (c == '!' || c == '+' || c == '|' || c == '^')
+				{
+					while (operations.size() > 0 && this->CheckPriority(c, operations.back()))
+					{
+						output.push_back(operations.back());
+						operations.pop_back();
+					}
+					operations.push_back(c);
+				}
+				else
+					throw ExceptionExpSys("Error: Something wrong with expressions");
+			}
+		}
+	}
+	if (std::find(operations.begin(), operations.end(), '(') != operations.end() || 
+		std::find(operations.begin(), operations.end(), ')') != operations.end())
+		throw ExceptionExpSys("Error: Something wrong with expressions");
+	if (!operations.empty())
+	{
+		while (!operations.empty())
+		{
+			output.push_back(operations.back());
+			operations.pop_back();
+		}
+	}
+	std::string s(output.begin(), output.end());
+	return (s);
+
+}
 
 void		Expert_System::UpdateInitStatus(void)
 {
@@ -112,8 +181,9 @@ void		Expert_System::AddRule(std::string line)
 	std::string		right = "";
 	auto			*OneRule = new(Rule);
 
-
-	if (!std::regex_match(line, std::regex("^([A-Z()!+|^<]+)([=>]{2})([A-Z()!+|^]+)$")) && line.compare(""))
+	if (line.find("<=>") != std::string::npos)
+		throw ExceptionExpSys("Biconditional rules are a bonus. Please, use normal rules.");
+	if (!std::regex_match(line, std::regex("^([A-Z()!+|^]+)([=>]{2})([A-Z()!+|^]+)$")) && line.compare(""))
 		throw ExceptionExpSys("Input is not valid: Mistake in a rule");
 	if (line.find("=>") != std::string::npos)
 	{
@@ -122,8 +192,8 @@ void		Expert_System::AddRule(std::string line)
 
 		if (!left.compare("") || !right.compare(""))
 			throw ExceptionExpSys("Input is not valid: Incomplete rule");
-		OneRule->AddLeft(left);
-		OneRule->AddRight(right);
+		OneRule->AddLeft(this->ConvertString(left));
+		OneRule->AddRight(this->ConvertString(right));
 		this->Rules.push_back(OneRule);
 	}
 }
