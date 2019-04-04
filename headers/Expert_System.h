@@ -23,9 +23,16 @@ public:
 	void				PrintFacts(void);
 	bool				FindFacts(char name);
 	void				UpdateInitStatus(void);
+	void				AddQueriesToFacts(void);
 	bool				CheckPriority(char a, char b);
 	std::string			ConvertString(std::string expr);
-	// std::string			getInitFacts(void);
+	std::string			getQueries(void);
+
+// Calculation
+
+	void				UpdateFacts(std::string facts);
+	// bool				FindConnectedFacts(char name);
+	void				SolveRule(Rule *OneRule);
 
 	std::vector<Rule *>	Rules;
 	std::vector<Fact *>	Facts;

@@ -7,6 +7,7 @@
 # include "Checker.h"
 # include "Expert_System.h"
 # include "Rule.h"
+# include "Calculation.h"
 
 class Reading
 {

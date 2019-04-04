@@ -58,6 +58,32 @@ bool		Expert_System::FindFacts(char name)
 	return (0);
 }
 
+void		Expert_System::AddQueriesToFacts(void)
+{
+	for(char & c : this->_queries)
+	{
+		auto i = this->Facts.begin();
+
+		while (i != this->Facts.end())
+		{
+			if ((*i)->getName() == c)
+			{
+				(*i)->ChangeIsQuery();
+				break ;
+			}
+			i++;
+		}
+		if (i == this->Facts.end())
+		{
+			auto *OneFact = new(Fact);
+			OneFact->setName(c);
+			OneFact->ChangeIsQuery();
+			this->Facts.push_back(OneFact);
+		}
+		
+	}
+}
+
 void		Expert_System::AddAllFacts(void)
 {
 	if (this->Rules.empty())
@@ -82,7 +108,6 @@ void		Expert_System::AddAllFacts(void)
 				OneFact->setName(c);
 				this->Facts.push_back(OneFact);
 			}
-
 		}
 		i++;
 	}
@@ -158,7 +183,6 @@ std::string	Expert_System::ConvertString(std::string expr)
 	}
 	std::string s(output.begin(), output.end());
 	return (s);
-
 }
 
 void		Expert_System::UpdateInitStatus(void)
@@ -173,6 +197,18 @@ void		Expert_System::UpdateInitStatus(void)
 		    (*i)->ChangeStatus(true);
 		i++;
 	}
+}
+
+void		Expert_System::SolveRule(Rule *OneRule)
+{
+	// std::cout <<"solve rule" << std::endl;
+
+	std::cout << OneRule->getLeftPart() << " => " << OneRule->getRightPart() << std::endl;
+
+
+
+
+
 }
 
 void		Expert_System::AddRule(std::string line)
@@ -216,8 +252,12 @@ void		Expert_System::PrintFacts(void)
 	while (i != this->Facts.end())
 	{
 		std::cout << (*i)->getName();
-		std::cout << ", the status is " << (*i)->getStatus();
+		std::cout << ", the status is " << (*i)->getStatus() << ", is query: " << (*i)->getIsQuery();
 		std::cout << std::endl;
 		i++;
 	}
+}
+
+std::string	Expert_System::getQueries(void) {
+	return (this->_queries);
 }
