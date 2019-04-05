@@ -23,7 +23,7 @@ Reading::Reading(int argc, char **argv)
 
 			std::cout << "Facts: " << std::endl;
 			ExpSys->PrintFacts();
-			// ExpSys->PrintRules();
+			ExpSys->PrintRules();
 
 			new Calculation(*ExpSys);
 		}

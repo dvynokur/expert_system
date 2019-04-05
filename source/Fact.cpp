@@ -26,3 +26,4 @@ bool	Fact::getStatus(void) {
 bool	Fact::getIsQuery(void) {
 	return (this->_query);
 }
+

@@ -25,6 +25,7 @@ public:
 	void				UpdateInitStatus(void);
 	void				AddQueriesToFacts(void);
 	bool				CheckPriority(char a, char b);
+	bool				ReturnFactStatus(char a);
 	std::string			ConvertString(std::string expr);
 	std::string			getQueries(void);
 
@@ -32,7 +33,7 @@ public:
 
 	void				UpdateFacts(std::string facts);
 	// bool				FindConnectedFacts(char name);
-	void				SolveRule(Rule *OneRule);
+	void				SolveRule(std::string s);
 
 	std::vector<Rule *>	Rules;
 	std::vector<Fact *>	Facts;

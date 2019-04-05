@@ -80,7 +80,6 @@ void		Expert_System::AddQueriesToFacts(void)
 			OneFact->ChangeIsQuery();
 			this->Facts.push_back(OneFact);
 		}
-		
 	}
 }
 
@@ -199,16 +198,68 @@ void		Expert_System::UpdateInitStatus(void)
 	}
 }
 
-void		Expert_System::SolveRule(Rule *OneRule)
+void		Expert_System::SolveRule(std::string s)
 {
-	// std::cout <<"solve rule" << std::endl;
+	bool res = false;
 
-	std::cout << OneRule->getLeftPart() << " => " << OneRule->getRightPart() << std::endl;
+	std::vector<char> v(s.begin(), s.end());
+	std::vector<char> output;
+
+	for (const char & c : v)
+	{
+		if (c >= 65 && c <= 90)
+			output.push_back(c);
+ 		else
+		{
+			if ((c == '+' || c == '|' || c == '^') && output.size() > 1) {
+				res = this->ReturnFactStatus(output.back());
+				output.pop_back();
+				if (c == '+')
+					res = res & ReturnFactStatus(output.back());
+				else if (c == '|')
+					res = res | ReturnFactStatus(output.back());
+				else
+					res = res ^ ReturnFactStatus(output.back());
+				output.pop_back();
+				output.push_back(res);		
+			}
+			else if (c == '!' && output.size() > 0) {
+				
+				res = !(ReturnFactStatus(output.back()));
+				output.pop_back();
+				output.push_back(res);
+			}
+			else
+				throw ExceptionExpSys("Error. Wrong expression.");
+		}
+	}
+
+	// std::cout << "output back: " << char(output.back()) << std::endl;
+	if (output.size() != 1)
+		throw ExceptionExpSys("Error. Wrong expression");
 
 
+	std::cout << "Solved Rule " << s << " = " << res << std::endl;
 
+}
 
+bool		Expert_System::ReturnFactStatus(char c)
+{
+	if (c == 1)
+		return (true);
+	if (c == 0)
+		return (false);
 
+	auto i = this->Facts.begin();
+	bool res = false;
+
+	while (i != this->Facts.end())
+	{
+		if ((*i)->getName() == c)
+			res = (*i)->getStatus();
+		i++;
+	}
+	return (res);
 }
 
 void		Expert_System::AddRule(std::string line)
@@ -241,8 +292,11 @@ void		Expert_System::PrintRules(void)
 	while (i != this->Rules.end())
 	{
 		(*i)->PrintRule();
+
 		i++;
+
 	}
+
 }
 
 void		Expert_System::PrintFacts(void)
