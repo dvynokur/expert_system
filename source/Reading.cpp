@@ -25,7 +25,8 @@ Reading::Reading(int argc, char **argv)
 			ExpSys->PrintFacts();
 			ExpSys->PrintRules();
 
-			new Calculation(*ExpSys);
+			for (const char & c : ExpSys->getQueries())
+				ExpSys->FindingAnswers(c);
 		}
 		else
 			throw ExceptionExpSys("There must be a file");

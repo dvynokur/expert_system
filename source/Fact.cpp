@@ -1,6 +1,6 @@
 #include "../headers/Fact.h"
 
-Fact::Fact() : _status(false), _query(false) {};
+Fact::Fact() : _status(false), _query(false), _wasHere(false) {};
 Fact::~Fact() {};
 
 void	Fact::ChangeStatus(bool status) {

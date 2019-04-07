@@ -198,7 +198,7 @@ void		Expert_System::UpdateInitStatus(void)
 	}
 }
 
-void		Expert_System::SolveRule(std::string s)
+bool		Expert_System::SolveRule(std::string s)
 {
 	bool res = false;
 
@@ -234,14 +234,69 @@ void		Expert_System::SolveRule(std::string s)
 		}
 	}
 
+
 	// std::cout << "output back: " << char(output.back()) << std::endl;
 	if (output.size() != 1)
 		throw ExceptionExpSys("Error. Wrong expression");
 
 
 	std::cout << "Solved Rule " << s << " = " << res << std::endl;
+	return (res);
+}
+
+void		Expert_System::FindingAnswers(char c)
+{
+	bool res = false;
+
+	auto i = this->Rules.begin();
+
+	std::cout << "Rule in FindingAnswers: " << c << std::endl;
+
+	while (i != this->Rules.end())
+	{
+		if ((*i)->getLeftPart().find(c) != std::string::npos)
+		{
+			std::cout << "Rule in FindingAnswers inside the cicle: " << c << std::endl;
+			std::cout << "rule " << c << " found in left part" << " in rule: " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
+			if (this->IsSolvable((*i)->getRightPart()))
+			{
+				std::cout << "Solving rule " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
+				res = this->SolveRule((*i)->getRightPart());
+				// UpdateFacts(c);
+				// change query (c)
+				break ;
+			}
+		}
+		if ((*i)->getRightPart().find(c) != std::string::npos)
+		{
+			std::cout << "rule " << c << " found in right part" << " in rule: " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
+			if (this->IsSolvable((*i)->getLeftPart()))
+			{
+				std::cout << "Solving rule " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
+				res = this->SolveRule((*i)->getLeftPart());
+				// change query (c)
+				// UpdateFacts();
+				break ;
+			}
+		}
+		i++;
+	}
+	// CheckIsAnswer();
+	// for all facts:
+	// 	if (ExpSys.FindConnectedFacts())
+	// 		SolveRule();
+	// 		ExpSys.UpdateFacts();
+	// 		if answered
+	// 			AssignAnswer();
+	// 		no - repeat;
+	
+	
+
 
 }
+
+
+
 
 bool		Expert_System::ReturnFactStatus(char c)
 {
@@ -260,6 +315,26 @@ bool		Expert_System::ReturnFactStatus(char c)
 		i++;
 	}
 	return (res);
+}
+
+bool		Expert_System::IsSolvable(std::string rule)
+{
+	for (const char & c : rule)
+	{
+		auto i = this->Facts.begin();
+		if (c >= 65 && c <= 90)
+		{
+			// std::cout << c << " ";
+			while (i != this->Facts.end())
+			{
+				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
+					return (false);
+				i++;
+			}
+		}
+		std::cout << std::endl;
+	}
+	return (true);
 }
 
 void		Expert_System::AddRule(std::string line)
@@ -294,9 +369,7 @@ void		Expert_System::PrintRules(void)
 		(*i)->PrintRule();
 
 		i++;
-
 	}
-
 }
 
 void		Expert_System::PrintFacts(void)

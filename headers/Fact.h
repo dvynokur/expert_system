@@ -23,6 +23,7 @@ private:
 	bool	_status;
 	bool	_query;
 	char	_name;
+	bool	_wasHere;
 };
 
 #endif

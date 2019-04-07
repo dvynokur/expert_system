@@ -1,9 +1,9 @@
 CXX			= clang++
 CXXFLAGS	= -std=c++11
 # CXXFLAGS	= -std=c++11 -Wall -Wextra -Werror
-FILE		= main.cpp source/ExceptionExpSys.cpp source/Reading.cpp source/Checker.cpp source/Expert_System.cpp source/Fact.cpp source/Rule.cpp source/Calculation.cpp
+FILE		= main.cpp source/ExceptionExpSys.cpp source/Reading.cpp source/Checker.cpp source/Expert_System.cpp source/Fact.cpp source/Rule.cpp
 NAME		= expert_system
-OFILE		= main.o source/ExceptionExpSys.o source/Reading.o source/Checker.o source/Expert_System.o source/Fact.o source/Rule.o source/Calculation.o
+OFILE		= main.o source/ExceptionExpSys.o source/Reading.o source/Checker.o source/Expert_System.o source/Fact.o source/Rule.o
 
 all: $(NAME)
 

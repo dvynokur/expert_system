@@ -26,14 +26,16 @@ public:
 	void				AddQueriesToFacts(void);
 	bool				CheckPriority(char a, char b);
 	bool				ReturnFactStatus(char a);
+	bool				IsSolvable(std::string rule);
 	std::string			ConvertString(std::string expr);
 	std::string			getQueries(void);
+	void				FindingAnswers(char c);
 
 // Calculation
 
 	void				UpdateFacts(std::string facts);
 	// bool				FindConnectedFacts(char name);
-	void				SolveRule(std::string s);
+	bool				SolveRule(std::string s);
 
 	std::vector<Rule *>	Rules;
 	std::vector<Fact *>	Facts;
