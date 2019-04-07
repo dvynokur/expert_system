@@ -6,6 +6,16 @@
 # include "ExceptionExpSys.h"
 # include "Fact.h"
 # include "Rule.h"
+# include <string>
+
+# define RED				"\x1b[31m"
+# define GREEN				"\x1b[32m"
+# define YELLOW				"\x1b[33m"
+# define BLUE				"\x1b[34m"
+# define MAGENTA			"\x1b[35m"
+# define CYAN				"\x1b[36m"
+# define BLACK				"\x1b[37m"
+# define RESET				"\x1b[0m"
 
 class Expert_System
 {
@@ -29,11 +39,16 @@ public:
 	bool				IsSolvable(std::string rule);
 	std::string			ConvertString(std::string expr);
 	std::string			getQueries(void);
-	void				FindingAnswers(char c);
+	bool				FindingAnswers(char c);
+	bool				OnlyOneUnknown(std::string rule);
+	void				UpdateFacts(char c, int res);
+	std::string			ReplaceRule(std::string rule, char c, char rep);
+	size_t				getCounter(void);
+	void				PrintResult(void);
+
 
 // Calculation
 
-	void				UpdateFacts(std::string facts);
 	// bool				FindConnectedFacts(char name);
 	bool				SolveRule(std::string s);
 
@@ -47,7 +62,9 @@ private:
 
 	std::string				_queries;
 	std::string				_init_facts;
-	
+
+	size_t					_counter;
+
 };
 
 

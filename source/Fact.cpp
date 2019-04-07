@@ -3,12 +3,12 @@
 Fact::Fact() : _status(false), _query(false), _wasHere(false) {};
 Fact::~Fact() {};
 
-void	Fact::ChangeStatus(bool status) {
+void	Fact::ChangeStatus(int status) {
 	this->_status = status;
 }
 
-void	Fact::ChangeIsQuery(void) {
-	this->_query = true;
+void	Fact::ChangeIsQuery(bool q) {
+	this->_query = q;
 }
 
 void	Fact::setName(char name) {

@@ -1,6 +1,6 @@
 #include "../headers/Expert_System.h"
 
-Expert_System::Expert_System() : _queries(""), _init_facts("") {};
+Expert_System::Expert_System() : _queries(""), _init_facts(""), _counter(1) {};
 Expert_System::~Expert_System() {};
 
 bool		Expert_System::IsQueries(void)
@@ -68,7 +68,7 @@ void		Expert_System::AddQueriesToFacts(void)
 		{
 			if ((*i)->getName() == c)
 			{
-				(*i)->ChangeIsQuery();
+				(*i)->ChangeIsQuery(true);
 				break ;
 			}
 			i++;
@@ -77,7 +77,7 @@ void		Expert_System::AddQueriesToFacts(void)
 		{
 			auto *OneFact = new(Fact);
 			OneFact->setName(c);
-			OneFact->ChangeIsQuery();
+			OneFact->ChangeIsQuery(true);
 			this->Facts.push_back(OneFact);
 		}
 	}
@@ -193,7 +193,7 @@ void		Expert_System::UpdateInitStatus(void)
 	while (i != this->Facts.end())
 	{
 		if (this->_init_facts.find((*i)->getName()) != std::string::npos)
-		    (*i)->ChangeStatus(true);
+			(*i)->ChangeStatus(1);
 		i++;
 	}
 }
@@ -205,9 +205,19 @@ bool		Expert_System::SolveRule(std::string s)
 	std::vector<char> v(s.begin(), s.end());
 	std::vector<char> output;
 
+	if (s.length() == 1)
+	{
+		if (s[0] == 1)
+			return (1);
+		else if (s[0] == 0)
+			return (0);
+		else
+			return (ReturnFactStatus(s[0]));
+	}
+
 	for (const char & c : v)
 	{
-		if (c >= 65 && c <= 90)
+		if ((c >= 65 && c <= 90) || c == 1 || c == 0)
 			output.push_back(c);
  		else
 		{
@@ -230,7 +240,10 @@ bool		Expert_System::SolveRule(std::string s)
 				output.push_back(res);
 			}
 			else
+			{
+				// std::cout << "c in error: " << c << std::endl;
 				throw ExceptionExpSys("Error. Wrong expression.");
+			}
 		}
 	}
 
@@ -240,59 +253,94 @@ bool		Expert_System::SolveRule(std::string s)
 		throw ExceptionExpSys("Error. Wrong expression");
 
 
-	std::cout << "Solved Rule " << s << " = " << res << std::endl;
+	// std::cout << "Solved Rule " << s << " = " << res << std::endl;
 	return (res);
 }
 
-void		Expert_System::FindingAnswers(char c)
+bool		Expert_System::OnlyOneUnknown(std::string rule)
+{
+	int		counter = 0;
+
+	for (const char & c : rule)
+	{
+		auto i = this->Facts.begin();
+		if (c >= 65 && c <= 90)
+		{
+			// std::cout << c << " ";
+			while (i != this->Facts.end())
+			{
+				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
+					counter++;
+				i++;
+			}
+		}
+	}
+	if (counter == 1)
+		return (true);
+	else
+		return (false);
+}
+
+void		Expert_System::UpdateFacts(char c, int res)
+{
+	auto i = this->Facts.begin();
+
+	while (i != this->Facts.end())
+	{
+		if ((*i)->getName() == c)
+		{
+			(*i)->ChangeStatus(res);
+			(*i)->ChangeIsQuery(false);
+		}
+		i++;
+	}
+}
+
+std::string Expert_System::ReplaceRule(std::string rule, char c, char rep)
+{
+	std::string res = rule;
+
+	for (int i = 0; i < res.length(); ++i) {
+		if (res[i] == c)
+			res[i] = rep;
+  	}
+
+	return (res);
+}
+
+bool		Expert_System::FindingAnswers(char c)
 {
 	bool res = false;
 
 	auto i = this->Rules.begin();
 
-	std::cout << "Rule in FindingAnswers: " << c << std::endl;
-
 	while (i != this->Rules.end())
 	{
-		if ((*i)->getLeftPart().find(c) != std::string::npos)
+		if ((*i)->getLeftPart().find(c) != std::string::npos && OnlyOneUnknown((*i)->getLeftPart()) && IsSolvable((*i)->getRightPart()))
 		{
-			std::cout << "Rule in FindingAnswers inside the cicle: " << c << std::endl;
-			std::cout << "rule " << c << " found in left part" << " in rule: " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
-			if (this->IsSolvable((*i)->getRightPart()))
-			{
-				std::cout << "Solving rule " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
-				res = this->SolveRule((*i)->getRightPart());
-				// UpdateFacts(c);
-				// change query (c)
-				break ;
-			}
+			res = SolveRule((*i)->getRightPart());
+			if (res == SolveRule(ReplaceRule((*i)->getLeftPart(), c, 1)))
+				UpdateFacts(c, 1);
+			else if (res == SolveRule(ReplaceRule((*i)->getLeftPart(), c, 0)))
+				UpdateFacts(c, 0);
+			else
+				UpdateFacts(c, 2);
+			return (true);
 		}
-		if ((*i)->getRightPart().find(c) != std::string::npos)
+		if ((*i)->getRightPart().find(c) != std::string::npos && OnlyOneUnknown((*i)->getRightPart()) && IsSolvable((*i)->getLeftPart()))
 		{
-			std::cout << "rule " << c << " found in right part" << " in rule: " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
-			if (this->IsSolvable((*i)->getLeftPart()))
-			{
-				std::cout << "Solving rule " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
-				res = this->SolveRule((*i)->getLeftPart());
-				// change query (c)
-				// UpdateFacts();
-				break ;
-			}
+			res = this->SolveRule((*i)->getLeftPart());
+			if (res == SolveRule(ReplaceRule((*i)->getRightPart(), c, 1)))
+				UpdateFacts(c, 1);
+			else if (res == SolveRule(ReplaceRule((*i)->getRightPart(), c, 0)))
+				UpdateFacts(c, 0);
+			else 
+				UpdateFacts(c, 2);
+			return (true);
 		}
 		i++;
 	}
-	// CheckIsAnswer();
-	// for all facts:
-	// 	if (ExpSys.FindConnectedFacts())
-	// 		SolveRule();
-	// 		ExpSys.UpdateFacts();
-	// 		if answered
-	// 			AssignAnswer();
-	// 		no - repeat;
-	
-	
-
-
+	return (false);
 }
 
 
@@ -332,7 +380,6 @@ bool		Expert_System::IsSolvable(std::string rule)
 				i++;
 			}
 		}
-		std::cout << std::endl;
 	}
 	return (true);
 }
@@ -372,6 +419,29 @@ void		Expert_System::PrintRules(void)
 	}
 }
 
+void		Expert_System::PrintResult(void)
+{
+	for (const char & c : this->getQueries())
+	{
+		auto i = this->Facts.begin();
+
+		while (i != this->Facts.end())
+		{
+			if ((*i)->getName() == c)
+			{
+				std::cout << YELLOW << "Rule " << BLUE << c << YELLOW << " is "; 
+				if ((*i)->getStatus() == 0)
+					std::cout << RED << "false" << std::endl;
+				else if ((*i)->getStatus() == 1)
+					std::cout << GREEN << "true" << std::endl;
+				else
+					std::cout << CYAN << "ambiguous" << std::endl;
+			}
+			i++;
+		}
+	}
+}
+
 void		Expert_System::PrintFacts(void)
 {
 	auto i = this->Facts.begin();
@@ -387,4 +457,8 @@ void		Expert_System::PrintFacts(void)
 
 std::string	Expert_System::getQueries(void) {
 	return (this->_queries);
+}
+
+size_t		Expert_System::getCounter(void) {
+	return (this->_counter);
 }
