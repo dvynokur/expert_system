@@ -40,11 +40,17 @@ public:
 	std::string			ConvertString(std::string expr);
 	std::string			getQueries(void);
 	bool				FindingAnswers(char c);
-	bool				OnlyOneUnknown(std::string rule);
+	char				OnlyOneUnknown(std::string rule);
 	void				UpdateFacts(char c, int res);
 	std::string			ReplaceRule(std::string rule, char c, char rep);
 	size_t				getCounter(void);
 	void				PrintResult(void);
+	bool				IsFactAnswered(char c);
+	bool				FindInRightPart(char c);
+	bool				SolveRightPart(std::string rule, char fact, bool res);
+	bool				AllAnswered(std::string s);
+
+	// char				ReturnQuery(std::string rule);
 
 
 // Calculation

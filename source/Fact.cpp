@@ -1,6 +1,6 @@
 #include "../headers/Fact.h"
 
-Fact::Fact() : _status(false), _query(false), _wasHere(false) {};
+Fact::Fact() : _status(false), _query(false), _answered(false) {};
 Fact::~Fact() {};
 
 void	Fact::ChangeStatus(int status) {
@@ -27,3 +27,10 @@ bool	Fact::getIsQuery(void) {
 	return (this->_query);
 }
 
+bool	Fact::getAnswered(void) {
+	return (this->_answered);
+}
+
+void	Fact::setAnswered(void) {
+	this->_answered = true;
+}

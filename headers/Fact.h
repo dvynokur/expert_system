@@ -15,6 +15,8 @@ public:
 	char	getName(void);
 	bool	getStatus(void);
 	bool	getIsQuery(void);
+	bool	getAnswered(void);
+	void	setAnswered(void);
 
 private:
 	Fact &operator=(Fact const & src) = delete;
@@ -24,6 +26,7 @@ private:
 	bool	_query;
 	char	_name;
 	bool	_wasHere;
+	bool	_answered;
 };
 
 #endif

@@ -23,13 +23,14 @@ Reading::Reading(int argc, char **argv)
 			ExpSys->AddQueriesToFacts();
 
 			// std::cout << "Facts: " << std::endl;
-			// ExpSys->PrintFacts();
+			ExpSys->PrintFacts();
 			// ExpSys->PrintRules();
 
 			while (i < ExpSys->getQueries().length())
 			{
-				if (ExpSys->FindingAnswers(ExpSys->getQueries()[i]))
-					i = 0;
+				ExpSys->FindingAnswers(ExpSys->getQueries()[i]);
+				// if (ExpSys->FindingAnswers(ExpSys->getQueries()[i]))
+				// 	i = 0;
 				i++;
 			}
 
