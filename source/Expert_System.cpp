@@ -123,6 +123,8 @@ bool		Expert_System::CheckPriority(char a, char b)
 	return (false);
 }
 
+
+
 std::string	Expert_System::ConvertString(std::string expr)
 {
 	std::vector<char>	output;
@@ -194,6 +196,7 @@ void		Expert_System::UpdateInitStatus(void)
 	{
 		if (this->_init_facts.find((*i)->getName()) != std::string::npos)
 		{
+			// std::cout << BLACK << (*i)->getName() << RESET << std::endl;
 			(*i)->ChangeStatus(1);
 			(*i)->setAnswered();
 		}
@@ -201,98 +204,69 @@ void		Expert_System::UpdateInitStatus(void)
 	}
 }
 
-char		Expert_System::OnlyOneUnknown(std::string rule)
-{
-	int		counter = 0;
-	char	unknown = 0;
+// char		Expert_System::OnlyOneUnknown(std::string rule)
+// {
+// 	int		counter = 0;
+// 	char	unknown = 0;
 
-	// std::cout << "for rule " << rule << std::endl;
+// 	// std::cout << "for rule " << rule << std::endl;
 
-	for (const char & c : rule)
-	{
-		auto i = this->Facts.begin();
-		if (c >= 65 && c <= 90)
-		{
-			// std::cout << c << " ";
-			while (i != this->Facts.end())
-			{
-				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
-				{
-					// std::cout << (*i)->getName() << std::endl;
-					unknown = (*i)->getName();
-					counter++;
-				}
-				i++;
-			}
-		}
-	}
+// 	for (const char & c : rule)
+// 	{
+// 		auto i = this->Facts.begin();
+// 		if (c >= 65 && c <= 90)
+// 		{
+// 			// std::cout << c << " ";
+// 			while (i != this->Facts.end())
+// 			{
+// 				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
+// 				{
+// 					// std::cout << (*i)->getName() << std::endl;
+// 					unknown = (*i)->getName();
+// 					counter++;
+// 				}
+// 				i++;
+// 			}
+// 		}
+// 	}
 
-	if (counter == 1)
-		return (unknown);
-	else
-		return (0);
-}
+// 	if (counter == 1)
+// 		return (unknown);
+// 	else
+// 		return (0);
+// }
 
 // char		Expert_System::ReturnQuery(std::string rule)
 // {
 		
 // }
 
-void		Expert_System::UpdateFacts(char c, int res)
-{
-	auto i = this->Facts.begin();
-
-	while (i != this->Facts.end())
-	{
-		if ((*i)->getName() == c)
-		{
-			(*i)->ChangeStatus(res);
-			(*i)->ChangeIsQuery(false);
-		}
-		i++;
-	}
-}
-
-std::string Expert_System::ReplaceRule(std::string rule, char c, char rep)
-{
-	std::string res = rule;
-
-	for (int i = 0; i < res.length(); ++i) {
-		if (res[i] == c)
-			res[i] = rep;
-  	}
-
-	return (res);
-}
-
-
-// bool		Expert_System::FindingAnswers(char c)
+// void		Expert_System::UpdateFacts(char c, int res)
 // {
-// 	bool res = false;
+// 	auto i = this->Facts.begin();
 
-// 	auto i = this->Rules.begin();
-
-// 	if ()
-// 	while 
-// }
-// bool		Expert_System::FindingAnswers(char c)
-// {
-// 	bool res = false;
-// 	auto i = this->Rules.begin();
-
-// 	while (i != this->Rules.end())
+// 	while (i != this->Facts.end())
 // 	{
-// 		first = (*i)->getLeftPart();
-// 		second = (*i)->getRightPart();
-
-		
-// 		if (first.find(c) != std::string::npos && OnlyOneUnknown(first))
+// 		if ((*i)->getName() == c)
 // 		{
-// 			FindingAnswers(second)
+// 			(*i)->ChangeStatus(res);
+// 			(*i)->ChangeIsQuery(false);
 // 		}
+// 		i++;
 // 	}
 // }
 
+// std::string Expert_System::ReplaceRule(std::string rule, char c, char rep)
+// {
+// 	std::string res = rule;
+
+// 	for (int i = 0; i < res.length(); ++i) {
+// 		if (res[i] == c)
+// 			res[i] = rep;
+//   	}
+
+// 	return (res);
+// }
 
 bool		Expert_System::FindInRightPart(char c)
 {
@@ -307,13 +281,13 @@ bool		Expert_System::FindInRightPart(char c)
 	return (false);
 }
 
-
 bool		Expert_System::FindingAnswers(char c)
 {
 	bool res = false;
 
 	auto i = this->Rules.begin();
 	auto j = this->Facts.begin();
+	std::vector<std::string>	processed;
 
 	std::cout << "FACT in FindingAnswers: " << c << std::endl;
 
@@ -334,20 +308,50 @@ bool		Expert_System::FindingAnswers(char c)
 		while (j != this->Facts.end())
 		{
 			if ((*j)->getName() == c)
-				(*j)->setAnswered();
+				std::cout << GREEN << "name: " << (*j)->getName() << ", status: " << (*j)->getStatus() << RESET << std::endl;
+				// (*j)->setAnswered();
 			j++;
 		}
-		return (false);
+		return (0);
 	}
 	else
 	{
 		while (i != this->Rules.end())
 		{
-			if ((*i)->getRightPart().find(c) != std::string::npos)
+			if ((*i)->getRightPart().find(c) != std::string::npos && (*i)->getLeftPart().find(c) != std::string::npos)
 			{
 				j = this->Facts.begin();
+				while(j != this->Facts.end())
+				{
+					if ((*j)->getName() == c)
+						return ((*j)->getStatus());
+					j++;
 
+				}
+			}
+			
+			// if (!processed.empty() && std::find(processed.begin(), processed.end(), (*i)->getLeftPart()) == processed.end())
+			// {
+
+			// 	std::cout << RED << "^^^^^^^^^^^^^^^^^^^^^^^^^^" << RESET << std::endl;
+			// 	std::cout << RED;
+			// 	std::cout << processed.back();
+			// 	for (std::vector<std::string>::const_iterator i = processed.begin(); i != processed.end(); ++i)
+   //  				std::cout << *i << ' ';
+   //  			std::cout << RESET << std::endl;
+			// }
+
+			if (std::find(processed.begin(), processed.end(), (*i)->getLeftPart()) != processed.end())
+			{
+				std::cout << RED << "&&&&&&&&&&&&&&&&&&&" << RESET << std::endl;
+				throw ExceptionExpSys("exception");
+			}
+			else if ((*i)->getRightPart().find(c) != std::string::npos)
+			{
+				processed.push_back((*i)->getLeftPart());
+				j = this->Facts.begin();
 				res = SolveRule((*i)->getLeftPart());
+				std::cout << "res: " << res << std::endl;
 				res = SolveRightPart((*i)->getRightPart(), c, res);
 				while (j != this->Facts.end())
 				{
@@ -357,7 +361,11 @@ bool		Expert_System::FindingAnswers(char c)
 						{
 							std::cout << "all answered in left part!" << std::endl;
 							if ((*j)->getAnswered() == true && (*j)->getStatus() != res)
-								(*j)->ChangeStatus(2);
+							{
+								std::cout << RED << "There is a contradiction with Fact " << c << RESET << std::endl;
+								throw ExceptionExpSys("");
+							}
+								// (*j)->ChangeStatus(2);
 							else if ((*j)->getAnswered() == false)
 							{
 								std::cout << "!!!!!!!!!!!" << std::endl;
@@ -365,7 +373,8 @@ bool		Expert_System::FindingAnswers(char c)
 								(*j)->ChangeStatus(res);
 							}
 						}
-						(*j)->ChangeStatus(res);
+						if (!(*j)->getAnswered())
+							(*j)->ChangeStatus(res);
 					}
 					j++;
 				}
@@ -377,38 +386,54 @@ bool		Expert_System::FindingAnswers(char c)
 	return (res);
 }
 
+
 bool		Expert_System::AllAnswered(std::string s)
 {
 	std::cout << "in all answered for " << s << std::endl;
-	auto i = this->Facts.begin();
+	
 
 	for (const char & c : s)
 	{
+		auto i = this->Facts.begin();
 		if (c >= 65 && c <= 90)
 		{
 			while (i != this->Facts.end())
 			{
-				if ((*i)->getName() == c && (*i)->getAnswered() == false)
-					return (false);
+				if ((*i)->getName() == c && (*i)->getAnswered())
+				{
+					std::cout << CYAN << "*******************" << RESET << std::endl;
+					return (true);
+				}
 				i++;
 			}
 		}
 	}
-
-
-
-	// while (i != this->Facts.end())
-	// {
-	// 	std::cout << CYAN << "name fact: " << (*i)->getName() << ", answered: " << (*i)->getAnswered() << RESET << std::endl;
-	// 	if ((*i)->getAnswered() == 0)
-	// 	{
-	// 		std::cout << RED << s << " false false false" << RESET << std::endl;
-	// 		return (false);
-	// 	}
-	// 	i++;
-	// }
-	return (true);
+	return (false);
 }
+
+
+// bool		Expert_System::AllAnswered(std::string s)
+// {
+// 	std::cout << "in all answered for " << s << std::endl;
+// 	auto i = this->Facts.begin();
+
+// 	for (const char & c : s)
+// 	{
+// 		if (c >= 65 && c <= 90)
+// 		{
+// 			while (i != this->Facts.end())
+// 			{
+// 				if ((*i)->getName() == c && (*i)->getAnswered() == false)
+// 				{
+// 					std::cout << CYAN << "*******************" << RESET << std::endl;
+// 					return (false);
+// 				}
+// 				i++;
+// 			}
+// 		}
+// 	}
+// 	return (true);
+// }
 
 bool		Expert_System::SolveRightPart(std::string rule, char fact, bool res)
 {
@@ -447,19 +472,40 @@ bool		Expert_System::SolveRule(std::string s)
 	}
 
 
+
 	for (const char & c : v)
 	{
+		std::cout << c << std::endl;
 		if ((c >= 65 && c <= 90) || c == 1 || c == 0)
+		{
 			output.push_back(FindingAnswers(c));
+			// std::cout << RED << "status: " << ReturnFactStatus(c) << RESET << std::endl;
+
+		}
  		else
 		{
 			if ((c == '+' || c == '|' || c == '^') && output.size() > 1) {
 				res = this->ReturnFactStatus(output.back());
 				output.pop_back();
 				if (c == '+')
+				{
+					std::cout << BLUE << "//////////////" << std::endl;
+					std::cout << "status first: " << res << std::endl;
+					std::cout << "status second : " << ReturnFactStatus(output.back()) << std::endl;
 					res = res & ReturnFactStatus(output.back());
+					std::cout << "status res: " << res << std::endl;
+					std::cout << "|||||||||||||||||||" << RESET << std::endl;
+
+				}
 				else if (c == '|')
+				{
+					std::cout << BLUE << "//////////////" << std::endl;
+					std::cout << "status first: " << res << std::endl;
+					std::cout << "status second : " << ReturnFactStatus(output.back()) << std::endl;
 					res = res | ReturnFactStatus(output.back());
+					std::cout << "status res: " << res << std::endl;
+					std::cout << "|||||||||||||||||||" << RESET << std::endl;
+				}
 				else
 					res = res ^ ReturnFactStatus(output.back());
 				output.pop_back();
@@ -472,115 +518,13 @@ bool		Expert_System::SolveRule(std::string s)
 				output.push_back(res);
 			}
 			else
-			{
-				// std::cout << "c in error: " << c << std::endl;
 				throw ExceptionExpSys("Error. Wrong expression.");
-			}
 		}
 	}
-
-
-
-	
-
-	// for (const char & c : v)
-	// {
-	// 	if ((c >= 65 && c <= 90) || c == 1 || c == 0)
-	// 		output.push_back(c);
- // 		else
-	// 	{
-	// 		if ((c == '+' || c == '|' || c == '^') && output.size() > 1) {
-	// 			res = this->ReturnFactStatus(output.back());
-	// 			output.pop_back();
-	// 			if (c == '+')
-	// 				res = res & ReturnFactStatus(output.back());
-	// 			else if (c == '|')
-	// 				res = res | ReturnFactStatus(output.back());
-	// 			else
-	// 				res = res ^ ReturnFactStatus(output.back());
-	// 			output.pop_back();
-	// 			output.push_back(res);		
-	// 		}
-	// 		else if (c == '!' && output.size() > 0) {
-				
-	// 			res = !(ReturnFactStatus(output.back()));
-	// 			output.pop_back();
-	// 			output.push_back(res);
-	// 		}
-	// 		else
-	// 		{
-	// 			// std::cout << "c in error: " << c << std::endl;
-	// 			throw ExceptionExpSys("Error. Wrong expression.");
-	// 		}
-	// 	}
-	// }
-
-
-	// std::cout << "output back: " << char(output.back()) << std::endl;
 	if (output.size() != 1)
 		throw ExceptionExpSys("Error. Wrong expression");
-
-
-	// std::cout << "Solved Rule " << s << " = " << res << std::endl;
 	return (res);
 }
-
-
-
-
-
-// 	while (i != this->Rules.end())
-// 	{
-// 		if ((*i)->getRightPart().find(c) != std::string::npos && OnlyOneUnknown((*i)->getRightPart()))
-// 		{
-// 			// std::cout << "FindingAnswers. Fact: " << c << ", Rule: " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
-
-// 			if (IsSolvable((*i)->getLeftPart()))
-// 			{
-// 				std::cout << "after IsSolvable, rule " << c << std::endl;
-// 				res = this->SolveRule((*i)->getLeftPart());
-// 				if (res == SolveRule(ReplaceRule((*i)->getRightPart(), c, 1)))
-// 					UpdateFacts(c, 1);
-// 				else if (res == SolveRule(ReplaceRule((*i)->getRightPart(), c, 0)))
-// 					UpdateFacts(c, 0);
-// 				else 
-// 					UpdateFacts(c, 2);
-// 				return (true);
-// 			}
-// 			else if (OnlyOneUnknown((*i)->getLeftPart()))
-// 			{
-// 				std::cout << "in recursion" << std::endl;
-// 				FindingAnswers(OnlyOneUnknown((*i)->getLeftPart()));
-// 			}
-// 		}
-// 		if ((*i)->getLeftPart().find(c) != std::string::npos && OnlyOneUnknown((*i)->getLeftPart()))
-// 		{
-// 			std::cout << "FindingAnswers. Fact: " << c << ", Rule: " << (*i)->getLeftPart() << " => " << (*i)->getRightPart() << std::endl;
-// 			if (IsSolvable((*i)->getRightPart()))
-// 			{
-// 				std::cout << "after IsSolvable, rule " << c << std::endl;
-// 				res = SolveRule((*i)->getRightPart());
-// 				if (res == SolveRule(ReplaceRule((*i)->getLeftPart(), c, 1)))
-// 					UpdateFacts(c, 1);
-// 				else if (res == SolveRule(ReplaceRule((*i)->getLeftPart(), c, 0)))
-// 					UpdateFacts(c, 0);
-// 				else
-// 					UpdateFacts(c, 2);
-// 				return (true);
-// 			}
-// 			else if (OnlyOneUnknown((*i)->getRightPart()))
-// 			{
-// 				std::cout << "in recursion" << std::endl;
-// 				FindingAnswers(OnlyOneUnknown((*i)->getRightPart()));
-// 			}
-
-			
-// 		}
-// 		i++;
-// 	}
-// 	return (false);
-// }
-
 
 bool		Expert_System::IsFactAnswered(char c)
 {
@@ -650,6 +594,8 @@ void		Expert_System::AddRule(std::string line)
 
 		if (!left.compare("") || !right.compare(""))
 			throw ExceptionExpSys("Input is not valid: Incomplete rule");
+		if (right.find("|") != std::string::npos || right.find("^") != std::string::npos)
+			throw ExceptionExpSys("OR and XOR in conclusions is a bonus.");
 		OneRule->AddLeft(this->ConvertString(left));
 		OneRule->AddRight(this->ConvertString(right));
 		this->Rules.push_back(OneRule);
@@ -708,6 +654,6 @@ std::string	Expert_System::getQueries(void) {
 	return (this->_queries);
 }
 
-size_t		Expert_System::getCounter(void) {
-	return (this->_counter);
-}
+// size_t		Expert_System::getCounter(void) {
+// 	return (this->_counter);
+// }

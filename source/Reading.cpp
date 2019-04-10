@@ -19,8 +19,8 @@ Reading::Reading(int argc, char **argv)
 				Checker::CheckLine(this->line, *ExpSys);
 			}
 			ExpSys->AddAllFacts();
-			ExpSys->UpdateInitStatus();
 			ExpSys->AddQueriesToFacts();
+			ExpSys->UpdateInitStatus();
 
 			// std::cout << "Facts: " << std::endl;
 			ExpSys->PrintFacts();
