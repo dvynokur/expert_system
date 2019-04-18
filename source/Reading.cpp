@@ -23,7 +23,7 @@ Reading::Reading(int argc, char **argv)
 			ExpSys->UpdateInitStatus();
 
 			// std::cout << "Facts: " << std::endl;
-			ExpSys->PrintFacts();
+			// ExpSys->PrintFacts();
 			// ExpSys->PrintRules();
 
 			while (i < ExpSys->getQueries().length())

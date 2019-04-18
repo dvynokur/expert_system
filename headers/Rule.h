@@ -16,6 +16,8 @@ public:
 	void			PrintRule(void);
 	std::string		getLeftPart(void);
 	std::string		getRightPart(void);
+	bool			getWasHere(void);
+	void			setWasHere(bool value);
 
 private:
 	Rule &operator=(Rule const & src) ;
@@ -23,6 +25,7 @@ private:
 
 	std::string		_left_part;
 	std::string		_right_part;
+	bool			_wasHere;
 };
 
 #endif

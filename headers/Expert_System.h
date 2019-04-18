@@ -49,6 +49,8 @@ public:
 	bool				FindInRightPart(char c);
 	bool				SolveRightPart(std::string rule, char fact, bool res);
 	bool				AllAnswered(std::string s);
+	bool				WasInFact(char fact);
+	void				ClearWasInRule(void);
 
 	// char				ReturnQuery(std::string rule);
 

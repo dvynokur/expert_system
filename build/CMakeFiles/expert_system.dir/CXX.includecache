@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/Users/dvynokur/ex/expert_system/headers/Checker.h
+iostream
+-
+regex
+-
+algorithm
+-
+string
+-
+cctype
+-
+ExceptionExpSys.h
+/Users/dvynokur/ex/expert_system/headers/ExceptionExpSys.h
+Expert_System.h
+/Users/dvynokur/ex/expert_system/headers/Expert_System.h
+
 /Users/dvynokur/ex/expert_system/headers/ExceptionExpSys.h
 exception
 -
@@ -34,11 +50,31 @@ string
 iostream
 -
 
+/Users/dvynokur/ex/expert_system/headers/Reading.h
+iostream
+-
+fstream
+-
+ExceptionExpSys.h
+/Users/dvynokur/ex/expert_system/headers/ExceptionExpSys.h
+Checker.h
+/Users/dvynokur/ex/expert_system/headers/Checker.h
+Expert_System.h
+/Users/dvynokur/ex/expert_system/headers/Expert_System.h
+Rule.h
+/Users/dvynokur/ex/expert_system/headers/Rule.h
+
 /Users/dvynokur/ex/expert_system/headers/Rule.h
 iostream
 -
 
-/Users/dvynokur/ex/expert_system/source/Expert_System.cpp
-../headers/Expert_System.h
-/Users/dvynokur/ex/expert_system/headers/Expert_System.h
+/Users/dvynokur/ex/expert_system/main.cpp
+iostream
+-
+sstream
+-
+headers/Reading.h
+/Users/dvynokur/ex/expert_system/headers/Reading.h
+headers/ExceptionExpSys.h
+/Users/dvynokur/ex/expert_system/headers/ExceptionExpSys.h
 

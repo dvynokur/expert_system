@@ -17,6 +17,8 @@ public:
 	bool	getIsQuery(void);
 	bool	getAnswered(void);
 	void	setAnswered(void);
+	void	setWasHere(void);
+	bool	WasHere(void);
 
 private:
 	Fact &operator=(Fact const & src) = delete;
