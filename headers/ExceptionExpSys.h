@@ -5,6 +5,8 @@
 # include <sstream>
 # include <regex>
 
+# include "Expert_System.h"
+
 class ExceptionExpSys: public std::exception {
 
 public:

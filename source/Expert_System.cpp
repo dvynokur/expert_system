@@ -280,7 +280,6 @@ bool		Expert_System::FindingAnswers(char c)
 							{
 								std::cout << RED << "There is a contradiction with Fact " << c << RESET << std::endl;
 								exit (0);
-								// throw ExceptionExpSys("");
 							}
 							else if ((*j)->getAnswered() == false)
 							{
