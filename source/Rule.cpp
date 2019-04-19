@@ -11,11 +11,11 @@ void		Rule::AddRight(std::string line) {
 	this->_right_part = line;
 }
 
-void		Rule::PrintRule(void)
-{
-	std::cout << "left: " << this->_left_part << std::endl;
-	std::cout << "right: " << this->_right_part << std::endl;
-}
+// void		Rule::PrintRule(void)
+// {
+// 	std::cout << "left: " << this->_left_part << std::endl;
+// 	std::cout << "right: " << this->_right_part << std::endl;
+// }
 
 std::string		Rule::getLeftPart(void) {
 	return (this->_left_part);

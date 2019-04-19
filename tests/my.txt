@@ -1,0 +1,7 @@
+# comment
+
+B => A
+C => A
+
+=C
+?A

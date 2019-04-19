@@ -1,16 +1,12 @@
-#ifndef CHECKER_H
-# define CHECKER_H
+#pragma once
 
 # include <iostream>
-# include <regex>
 # include <algorithm>
-# include <string>
 # include <cctype>
 # include "ExceptionExpSys.h"
 # include "Expert_System.h"
 
-class Checker
-{
+class Checker {
 public:
 	Checker();
 	~Checker();
@@ -21,6 +17,3 @@ private:
 	Checker &operator=(Checker const & src);
 	Checker(Checker const & src);
 };
-
-
-#endif

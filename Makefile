@@ -17,7 +17,7 @@ all: expert_system
 
 .PHONY: clean
 clean:
-	@echo $(RED)"\n$@"$(RESET)
+	@echo $(RED)"$@"$(RESET)
 	@rm -rf build/
 
 

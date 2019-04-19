@@ -211,16 +211,16 @@ bool		Expert_System::FindInRightPart(char c)
 	return (false);
 }
 
-void		Expert_System::ClearWasInRule(void)
-{
-	auto i = this->Rules.begin();
+// void		Expert_System::ClearWasInRule(void)
+// {
+// 	auto i = this->Rules.begin();
 
-	while(i != this->Rules.end())
-	{
-		(*i)->setWasHere(false);
-		i++;
-	}
-}
+// 	while(i != this->Rules.end())
+// 	{
+// 		(*i)->setWasHere(false);
+// 		i++;
+// 	}
+// }
 
 bool		Expert_System::FindingAnswers(char c)
 {
@@ -302,18 +302,18 @@ bool		Expert_System::FindingAnswers(char c)
 	return (res);
 }
 
-bool		Expert_System::WasInFact(char fact)
-{
-	auto i = this->Facts.begin();
+// bool		Expert_System::WasInFact(char fact)
+// {
+// 	auto i = this->Facts.begin();
 
-	while (i != this->Facts.end())
-	{
-		if ((*i)->getName() == fact && (*i)->WasHere())
-			return (true);
-		i++;
-	}
-	return (false);
-}
+// 	while (i != this->Facts.end())
+// 	{
+// 		if ((*i)->getName() == fact && (*i)->WasHere())
+// 			return (true);
+// 		i++;
+// 	}
+// 	return (false);
+// }
 
 bool		Expert_System::AllAnswered(std::string s)
 {
@@ -431,23 +431,23 @@ bool		Expert_System::ReturnFactStatus(char c)
 	return (res);
 }
 
-bool		Expert_System::IsSolvable(std::string rule)
-{
-	for (const char & c : rule)
-	{
-		auto i = this->Facts.begin();
-		if (c >= 65 && c <= 90)
-		{
-			while (i != this->Facts.end())
-			{
-				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
-					return (false);
-				i++;
-			}
-		}
-	}
-	return (true);
-}
+// bool		Expert_System::IsSolvable(std::string rule)
+// {
+// 	for (const char & c : rule)
+// 	{
+// 		auto i = this->Facts.begin();
+// 		if (c >= 65 && c <= 90)
+// 		{
+// 			while (i != this->Facts.end())
+// 			{
+// 				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
+// 					return (false);
+// 				i++;
+// 			}
+// 		}
+// 	}
+// 	return (true);
+// }
 
 void		Expert_System::AddRule(std::string line)
 {
@@ -474,17 +474,17 @@ void		Expert_System::AddRule(std::string line)
 	}
 }
 
-void		Expert_System::PrintRules(void)
-{
-	auto i = this->Rules.begin();
+// void		Expert_System::PrintRules(void)
+// {
+// 	auto i = this->Rules.begin();
 
-	while (i != this->Rules.end())
-	{
-		(*i)->PrintRule();
+// 	while (i != this->Rules.end())
+// 	{
+// 		(*i)->PrintRule();
 
-		i++;
-	}
-}
+// 		i++;
+// 	}
+// }
 
 void		Expert_System::PrintResult(void)
 {
@@ -509,18 +509,18 @@ void		Expert_System::PrintResult(void)
 	}
 }
 
-void		Expert_System::PrintFacts(void)
-{
-	auto i = this->Facts.begin();
+// void		Expert_System::PrintFacts(void)
+// {
+// 	auto i = this->Facts.begin();
 
-	while (i != this->Facts.end())
-	{
-		std::cout << (*i)->getName();
-		std::cout << ", the status is " << (*i)->getStatus() << ", is query: " << (*i)->getIsQuery() << ", is answered: " << (*i)->getAnswered();
-		std::cout << std::endl;
-		i++;
-	}
-}
+// 	while (i != this->Facts.end())
+// 	{
+// 		std::cout << (*i)->getName();
+// 		std::cout << ", the status is " << (*i)->getStatus() << ", is query: " << (*i)->getIsQuery() << ", is answered: " << (*i)->getAnswered();
+// 		std::cout << std::endl;
+// 		i++;
+// 	}
+// }
 
 std::string	Expert_System::getQueries(void) {
 	return (this->_queries);

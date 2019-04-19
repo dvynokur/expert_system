@@ -1,10 +1,8 @@
-#ifndef FACT_H
-# define FACT_H
+#pragma once
 
-# include <iostream>
+#include <iostream>
 
-class Fact
-{
+class Fact {
 public:
 	Fact();
 	~Fact();
@@ -14,11 +12,11 @@ public:
 	void	setName(char name);
 	char	getName(void);
 	bool	getStatus(void);
-	bool	getIsQuery(void);
+	// bool	getIsQuery(void);
 	bool	getAnswered(void);
 	void	setAnswered(void);
 	void	setWasHere(void);
-	bool	WasHere(void);
+	// bool	WasHere(void);
 
 private:
 	Fact &operator=(Fact const & src) = delete;
@@ -30,5 +28,3 @@ private:
 	bool	_wasHere;
 	bool	_answered;
 };
-
-#endif

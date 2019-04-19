@@ -1,0 +1,13 @@
+A | B + C => E
+(F | G) + H => E
+
+=GH
+?E
+
+#WRONG IN CORR FORM:
+
+#A | B + C => E
+#(F | G) + H => E
+
+#=AC
+#?E

@@ -1,19 +1,15 @@
-#ifndef RULE_H
-# define RULE_H
+#pragma once
 
 # include <iostream>
 
-class Rule
-{
+class Rule {
 public:
 	Rule();
 	~Rule();
 
-	// void			AddLeft(std::string line);
-	// void			AddRight(std::string line);
 	void			AddLeft(std::string line);
 	void			AddRight(std::string line);
-	void			PrintRule(void);
+	// void			PrintRule(void);
 	std::string		getLeftPart(void);
 	std::string		getRightPart(void);
 	bool			getWasHere(void);
@@ -27,5 +23,3 @@ private:
 	std::string		_right_part;
 	bool			_wasHere;
 };
-
-#endif

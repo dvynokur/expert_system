@@ -1,16 +1,11 @@
-#ifndef EXCEPTIONEXPSYS_H
-# define EXCEPTIONEXPSYS_H
+#pragma once
 
 # include <exception>
 # include <string>
 # include <sstream>
 # include <regex>
 
-class ExceptionExpSys
-{
-private:
-	std::string		_err;
-	const			ExceptionExpSys & operator=(const ExceptionExpSys &);
+class ExceptionExpSys: public std::exception {
 
 public:
 	ExceptionExpSys(void);
@@ -19,6 +14,8 @@ public:
 	~ExceptionExpSys(void) throw();
 
 	char const		*what(void) const throw();
-};
 
-#endif
+private:
+	std::string		_err;
+	const			ExceptionExpSys & operator=(const ExceptionExpSys &);
+};

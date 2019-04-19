@@ -23,9 +23,9 @@ bool	Fact::getStatus(void) {
 	return (this->_status);
 }
 
-bool	Fact::getIsQuery(void) {
-	return (this->_query);
-}
+// bool	Fact::getIsQuery(void) {
+// 	return (this->_query);
+// }
 
 bool	Fact::getAnswered(void) {
 	return (this->_answered);
@@ -35,9 +35,9 @@ void	Fact::setAnswered(void) {
 	this->_answered = true;
 }
 
-bool	Fact::WasHere(void) {
-	return (this->_wasHere);
-}
+// bool	Fact::WasHere(void) {
+// 	return (this->_wasHere);
+// }
 
 void	Fact::setWasHere(void) {
 	this->_wasHere = true;
