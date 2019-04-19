@@ -1,0 +1,10 @@
+# NOT
+
+!A => B
+!C => D
+E => !F
+
+=AE
+?BDF
+
+#B is False, D is True, F is False

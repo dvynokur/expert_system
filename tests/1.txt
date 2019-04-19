@@ -1,0 +1,11 @@
+# AND
+
+A + B => C
+D + E => F
+G + H => I
+J + K => L
+
+?QSTCFIL
+=ABDH
+
+# Q is False, S is False, T is False, C is True, F is False, I is False, L is False

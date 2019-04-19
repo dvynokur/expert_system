@@ -1,3 +1,5 @@
+# Contradiction
+
 (((A ^ B) + !(A + B + C)) ^ D) + F | A => E + F
 A => !E
 

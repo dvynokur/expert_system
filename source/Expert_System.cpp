@@ -1,6 +1,6 @@
 #include "../headers/Expert_System.h"
 
-Expert_System::Expert_System() : _queries(""), _init_facts(""), _counter(1) {};
+Expert_System::Expert_System() : _queries(""), _init_facts("") {};
 Expert_System::~Expert_System() {};
 
 bool		Expert_System::IsQueries(void)
@@ -211,17 +211,6 @@ bool		Expert_System::FindInRightPart(char c)
 	return (false);
 }
 
-// void		Expert_System::ClearWasInRule(void)
-// {
-// 	auto i = this->Rules.begin();
-
-// 	while(i != this->Rules.end())
-// 	{
-// 		(*i)->setWasHere(false);
-// 		i++;
-// 	}
-// }
-
 bool		Expert_System::FindingAnswers(char c)
 {
 	bool res = false;
@@ -239,15 +228,7 @@ bool		Expert_System::FindingAnswers(char c)
 		}
 	}
 	if (!FindInRightPart(c))
-	{
-		while (j != this->Facts.end())
-		{
-			if ((*j)->getName() == c)
-				(*j)->setWasHere();
-			j++;
-		}
 		return (0);
-	}
 	else
 	{
 		while (i != this->Rules.end())
@@ -285,7 +266,6 @@ bool		Expert_System::FindingAnswers(char c)
 							{
 								(*j)->setAnswered();
 								(*j)->ChangeStatus(res);
-								(*j)->setWasHere();
 							}
 						}
 						if (!(*j)->getAnswered())
@@ -300,19 +280,6 @@ bool		Expert_System::FindingAnswers(char c)
 	}
 	return (res);
 }
-
-// bool		Expert_System::WasInFact(char fact)
-// {
-// 	auto i = this->Facts.begin();
-
-// 	while (i != this->Facts.end())
-// 	{
-// 		if ((*i)->getName() == fact && (*i)->WasHere())
-// 			return (true);
-// 		i++;
-// 	}
-// 	return (false);
-// }
 
 bool		Expert_System::AllAnswered(std::string s)
 {
@@ -430,24 +397,6 @@ bool		Expert_System::ReturnFactStatus(char c)
 	return (res);
 }
 
-// bool		Expert_System::IsSolvable(std::string rule)
-// {
-// 	for (const char & c : rule)
-// 	{
-// 		auto i = this->Facts.begin();
-// 		if (c >= 65 && c <= 90)
-// 		{
-// 			while (i != this->Facts.end())
-// 			{
-// 				if ((*i)->getName() == c && (*i)->getIsQuery() == true)
-// 					return (false);
-// 				i++;
-// 			}
-// 		}
-// 	}
-// 	return (true);
-// }
-
 void		Expert_System::AddRule(std::string line)
 {
 	std::string		left = "";
@@ -473,18 +422,6 @@ void		Expert_System::AddRule(std::string line)
 	}
 }
 
-// void		Expert_System::PrintRules(void)
-// {
-// 	auto i = this->Rules.begin();
-
-// 	while (i != this->Rules.end())
-// 	{
-// 		(*i)->PrintRule();
-
-// 		i++;
-// 	}
-// }
-
 void		Expert_System::PrintResult(void)
 {
 	for (const char & c : this->getQueries())
@@ -508,6 +445,10 @@ void		Expert_System::PrintResult(void)
 	}
 }
 
+std::string	Expert_System::getQueries(void) {
+	return (this->_queries);
+}
+
 // void		Expert_System::PrintFacts(void)
 // {
 // 	auto i = this->Facts.begin();
@@ -521,6 +462,15 @@ void		Expert_System::PrintResult(void)
 // 	}
 // }
 
-std::string	Expert_System::getQueries(void) {
-	return (this->_queries);
-}
+
+// void		Expert_System::PrintRules(void)
+// {
+// 	auto i = this->Rules.begin();
+
+// 	while (i != this->Rules.end())
+// 	{
+// 		(*i)->PrintRule();
+
+// 		i++;
+// 	}
+// }

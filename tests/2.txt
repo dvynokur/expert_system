@@ -1,4 +1,7 @@
+# Contradiction
+
 A => B
 A => !B
+
 ?B
 =A

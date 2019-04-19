@@ -1,3 +1,5 @@
+#DIFFERENT RULES
+
 (A + B) ^ (D | K) => P
 P ^ N => Z
 X + (A | K ^ Z) => N
@@ -5,3 +7,5 @@ X + (A | K ^ Z) => N
 T + !X => G
 =ADF
 ?GTX
+
+# G is True, T is True, X is False

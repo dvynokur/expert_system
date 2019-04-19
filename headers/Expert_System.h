@@ -27,14 +27,11 @@ public:
 	void				AddAllFacts(void);
 	bool				IsQueries(void);
 	bool				IsInitFacts(void);
-	// void				PrintRules(void);
-	// void				PrintFacts(void);
 	bool				FindFacts(char name);
 	void				UpdateInitStatus(void);
 	void				AddQueriesToFacts(void);
 	bool				CheckPriority(char a, char b);
 	bool				ReturnFactStatus(char a);
-	// bool				IsSolvable(std::string rule);
 	std::string			ConvertString(std::string expr);
 	std::string			getQueries(void);
 	bool				FindingAnswers(char c);
@@ -43,14 +40,11 @@ public:
 	bool				FindInRightPart(char c);
 	bool				SolveRightPart(std::string rule, char fact, bool res);
 	bool				AllAnswered(std::string s);
-	// bool				WasInFact(char fact);
-	// void				ClearWasInRule(void);
-
 	bool				SolveRule(std::string s);
-
 	std::vector<Rule *>	Rules;
 	std::vector<Fact *>	Facts;
-	
+	// void				PrintRules(void);
+	// void				PrintFacts(void);
 
 private:
 	Expert_System &operator=(Expert_System const & src) = delete;
@@ -58,7 +52,4 @@ private:
 
 	std::string				_queries;
 	std::string				_init_facts;
-
-	size_t					_counter;
-
 };
